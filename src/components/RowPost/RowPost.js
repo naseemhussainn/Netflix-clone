@@ -19,7 +19,7 @@ function RowPost(props) {
     width: '100%',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
+      autoplay: 1,
     },
   };
   const handleMovie=(id)=>{
@@ -27,7 +27,7 @@ function RowPost(props) {
     axios.get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`).then(respose=>{
       console.log(respose.data.results[0].key);
       if(respose.data.results.length !== 0){
-        setYoutubeKey(respose.data.results[0].key);
+        setYoutubeKey(respose.data.results[0]);
       }else{
         alert('no trailer found');
       }
@@ -45,7 +45,7 @@ function RowPost(props) {
           )
         })}
         </div>
-        <Youtube videoId={youtubeKey} opts={opts} style={{dislay:'none'}} className='youtubeTab'/>
+       { youtubeKey &&  <Youtube videoId={youtubeKey.key} opts={opts} className='youtubeTab'/> }
     </div>
   )
 }
